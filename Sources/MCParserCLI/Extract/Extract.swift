@@ -13,10 +13,10 @@ extension MCParserCLI {
         //    @Option(name: .shortAndLong, help: "The number of times to repeat 'phrase'.")
         //    var count: Int?
         
-        @Option(name: .short, help: "The path of a db directory")
+        @Option(name: .customLong("db"), help: "The path of a db directory")
         var dbDirPath: String
         
-        @Option(name: .short, help: "The path where to output")
+        @Option(name: .customLong("output"), help: "The path where to output")
         var outDirPath: String
         
         func run() {
