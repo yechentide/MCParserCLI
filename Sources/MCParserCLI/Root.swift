@@ -11,7 +11,8 @@ struct MCParserCLI: ParsableCommand {
         //version: "0.0.1",
         shouldDisplay: true,
         subcommands: [
-            Extract.self
+            Extract.self,
+            Decode.self
         ]
     )
     

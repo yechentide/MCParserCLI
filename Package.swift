@@ -13,13 +13,15 @@ let package = Package(
     ],
     dependencies: [
         .package(url: "https://github.com/apple/swift-argument-parser", from: "1.1.2"),
-        .package(url: "https://github.com/yechentide/LvDBWrapper", branch: "main")
+        .package(url: "https://github.com/yechentide/LvDBWrapper", branch: "main"),
+        .package(url: "https://github.com/ipshing/SwiftNbt", from: "1.0.1")
     ],
     targets: [
         //.testTarget(name: "MCParserCLITests", dependencies: ["MCParserCLICore"]),
         .executableTarget(name: "MCParserCLI", dependencies: [
             .product(name: "ArgumentParser", package: "swift-argument-parser"),
-            .product(name: "LvDBWrapper", package: "LvDBWrapper")
+            .product(name: "LvDBWrapper", package: "LvDBWrapper"),
+            .product(name: "SwiftNbt", package: "SwiftNbt")
         ]),
     ]
 )

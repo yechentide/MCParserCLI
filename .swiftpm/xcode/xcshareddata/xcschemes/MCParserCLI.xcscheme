@@ -80,7 +80,7 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "extract"
+            argument = "decode -s /tmp/test02/players/player_2813ae5e-e356-3819-826e-d5f5f32e2889"
             isEnabled = "YES">
          </CommandLineArgument>
       </CommandLineArguments>
