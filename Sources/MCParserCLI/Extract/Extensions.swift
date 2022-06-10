@@ -11,7 +11,7 @@ extension Data {
     var hexString: String {
         var hexStr = ""
         for byte in self {
-            hexStr += String(byte, radix: 16, uppercase: true)
+            hexStr += String(format: "%02X", byte)
         }
         return hexStr
     }
