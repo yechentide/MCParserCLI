@@ -10,15 +10,18 @@ import Foundation
 struct PathGenerator {
     let rootDir: String
     
-    private var overworldDir: String { return self.rootDir + "chunks/overworld/" }
-    private var netherdDir  : String { return self.rootDir + "chunks/nether/" }
-    private var endDir     : String { return self.rootDir + "chunks/end/" }
+    private var overworldDir    : String { return self.rootDir + "chunks/overworld/" }
+    private var netherdDir      : String { return self.rootDir + "chunks/nether/" }
+    private var endDir          : String { return self.rootDir + "chunks/end/" }
     
-    private var mapDir     : String { return self.rootDir + "maps/" }
-    private var playerDir   : String { return self.rootDir + "players/" }
-    private var villageDir  : String { return self.rootDir + "villages/" }
-    private var wellKnownDir: String { return self.rootDir + "wellKnown/" }
-    private var structureDir: String { return self.rootDir + "structures/" }
+    private var mapDir          : String { return self.rootDir + "maps/" }
+    private var playerDir       : String { return self.rootDir + "players/" }
+    private var villageDir      : String { return self.rootDir + "villages/" }
+    private var wellKnownDir    : String { return self.rootDir + "wellKnown/" }
+    private var structureDir    : String { return self.rootDir + "structures/" }
+    
+    private var actorprefixDir  : String { return self.rootDir + "actorprefix/" }
+    private var digpDir         : String { return self.rootDir + "digp/" }
     
     init(rootPath: String) {
         self.rootDir = rootPath.hasSuffix("/") ? rootPath : rootPath+"/"
@@ -37,6 +40,9 @@ struct PathGenerator {
             try? fileManager.createDirectory(atPath: self.villageDir, withIntermediateDirectories: true)
             try? fileManager.createDirectory(atPath: self.wellKnownDir, withIntermediateDirectories: true)
             try? fileManager.createDirectory(atPath: self.structureDir, withIntermediateDirectories: true)
+            
+            try? fileManager.createDirectory(atPath: self.actorprefixDir, withIntermediateDirectories: true)
+            try? fileManager.createDirectory(atPath: self.digpDir, withIntermediateDirectories: true)
         }
     }
     
@@ -44,7 +50,7 @@ struct PathGenerator {
         let keyStr = String(data: key, encoding: .utf8) ?? ""
 
         switch keyStr {
-        case "AutonomousEntities", "BiomeData", "mobevents", "Nether", "Overworld", "portals", "schedulerWT", "scoreboard":
+        case "AutonomousEntities", "BiomeData", "LevelChunkMetaDataDictionary", "mobevents", "Nether", "Overworld", "portals", "schedulerWT", "scoreboard":
             return self.wellKnownDir + keyStr
         case let str where str.hasPrefix("map_"):
             return self.mapDir + keyStr
@@ -54,7 +60,16 @@ struct PathGenerator {
             return self.villageDir + keyStr
         case let str where str.hasPrefix("structuretemplate_"):
             return self.structureDir + keyStr
+        case let str where str.hasPrefix("actorprefix"):
+            return self.actorprefixDir + "actorprefix_" + key[11...].hexString
+        case let str where str.hasPrefix("digp"):
+            return self.digpDir + "digp_" + key[4...].hexString
         default:
+            // digp...
+            if let s = String(data: key[0...3], encoding: .utf8), s == "digp" {
+                return self.digpDir + "digp_" + key[4...].hexString
+            }
+            
             // unknown key
             guard [9, 10, 13, 14].contains(key.count) else {
                 return self.rootDir + key.hexString
