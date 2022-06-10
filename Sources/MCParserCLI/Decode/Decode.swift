@@ -11,7 +11,7 @@ import Foundation
 
 extension MCParserCLI {
     struct Decode: ParsableCommand {
-        @Option(name: [.short, .customLong("src")], help: "The path of a nbt data file")
+        @Argument(help: "The path of a nbt data file.")
         var source: String
         
         func run() {
