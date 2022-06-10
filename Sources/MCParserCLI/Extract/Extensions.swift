@@ -23,6 +23,12 @@ extension Data {
     }
 }
 
+extension FixedWidthInteger {
+    var data: Data {
+        return withUnsafeBytes(of: self) { Data($0) }
+    }
+}
+
 extension String {
     var hexData: Data? {
         var data = Data()
