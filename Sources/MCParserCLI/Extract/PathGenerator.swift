@@ -92,7 +92,7 @@ struct PathGenerator {
         }
         
         let type = Data([key[typeIndex]]).hexString
-        let subChunk = (typeIndex >= key.count - 1) ? "" : "(\(key[typeIndex+1]))"
+        let subChunk = (typeIndex >= key.count - 1) ? "" : "(\(  key[typeIndex+1].data.int8  ))"
         let name = "\(x)_\(z)#\(type)\(subChunk)"
         
         var outputPath = ""
