@@ -80,8 +80,16 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "decode -s /tmp/test02/players/player_2813ae5e-e356-3819-826e-d5f5f32e2889"
+            argument = "extract --db /tmp/testWorld/db --output /tmp/testWorld/deleted"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "delete --db /tmp/testWorld/db --dimension 0 --xstart 1 --xend 1 --zstart 3 --zend 3"
             isEnabled = "YES">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "decode -s /tmp/test02/players/player_2813ae5e-e356-3819-826e-d5f5f32e2889"
+            isEnabled = "NO">
          </CommandLineArgument>
       </CommandLineArguments>
    </LaunchAction>
