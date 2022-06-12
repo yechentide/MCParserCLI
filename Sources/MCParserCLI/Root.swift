@@ -12,7 +12,8 @@ struct MCParserCLI: ParsableCommand {
         shouldDisplay: true,
         subcommands: [
             Extract.self,
-            Decode.self
+            Decode.self,
+            Delete.self
         ]
     )
 }

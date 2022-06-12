@@ -51,6 +51,32 @@ extension FixedWidthInteger {
         }
         return "0b" + result.joined(separator: "_")
     }
+    
+    mutating func bitOn(offset: UInt8) {
+        let newValue = (self >> offset | 0x1) << offset | self
+        self = newValue
+    }
+    
+    mutating func bitOff(offset: UInt8) {
+        let left  = (self >> (offset + 1)) << (offset + 1)
+        let n = UInt8(MemoryLayout.size(ofValue: self) * 8)
+        let right = (self << (n-offset)) >> (n-offset)
+        self = left | right
+    }
+    
+    func isBitOn(offset: UInt8) -> Bool {
+        return (self >> offset) & 0x1 == 1
+    }
+    
+    var bitArray: [UInt8] {
+        // 0b0010 ---> [0b00, 0b01, 0b00, 0b00]
+        var array = [UInt8]()
+        for offset in 0..<self.bitWidth {
+            let flag = (self >> offset) & 0x1 == 1
+            array.append(flag ? 1 : 0)
+        }
+        return array
+    }
 }
 
 extension String {
