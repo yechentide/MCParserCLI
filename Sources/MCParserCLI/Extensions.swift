@@ -14,7 +14,7 @@ extension Data {
             let hexString = String(format: "%02X", byte)
             result.append(hexString)
         }
-        return "0x" + result.reversed().joined(separator: "_")
+        return "0x" + result.joined(separator: "_")
     }
     
     var uint8: UInt8 {
@@ -44,26 +44,17 @@ extension FixedWidthInteger {
     var binaryString: String {
         var result: [String] = []
         for i in 0..<(Self.bitWidth / 8) {
-            // ビットの右側から見ていって、UInt8の8bit(1byte)からはみ出た部分はtruncatiteする。
-            // 自身のビット長によって8bitづつ右側ビットシフトをして、右端8bitづつUInt8にしている
             let byte = UInt8(truncatingIfNeeded: self >> (i * 8))
-            
-            // 2進数文字列に変換
             let byteString = String(byte, radix: 2)
-            
-            // 8桁(8bit)になるように0 padding
-            let padding = String(repeating: "0",
-                                 count: 8 - byteString.count)
-            // 先頭にパディングを足す
+            let padding = String(repeating: "0", count: 8 - byteString.count)
             result.append(padding + byteString)
         }
-        
-        // 右端の8ビットが配列の先頭に入っているが、joined()するときは左端の8bitが配列の先頭に来ていて欲しいのでreversed()している
-        return "0b" + result.reversed().joined(separator: "_")
+        return "0b" + result.joined(separator: "_")
     }
 }
 
 extension String {
+    // string is little endian
     var hexData: Data? {
         var byteArray = [UInt8]()
         for c in self {
