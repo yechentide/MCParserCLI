@@ -15,6 +15,9 @@ extension MCParserCLI {
         var source: String
         
         func run() {
+            print("\n========== ========== ========== ========== ========== ==========")
+            print("Decode nbt file \(self.source)")
+            
             let srcURL = URL(fileURLWithPath: source)
             let fileName = srcURL.lastPathComponent + ".txt"
             let destURL = srcURL.deletingLastPathComponent().appendingPathComponent(fileName)
@@ -29,6 +32,8 @@ extension MCParserCLI {
             } catch {
                 print("Error: \(error)")
             }
+            
+            print("done!\n")
         }
     }
 }
