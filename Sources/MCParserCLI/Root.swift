@@ -6,9 +6,7 @@ struct MCParserCLI: ParsableCommand {
     
     static var configuration = CommandConfiguration(
         commandName: "mcp",
-        abstract: "MCBEのためのコマンドラインツール",
-        discussion: "MCBEのDB内のデータを扱うコマンドラインツール",
-        //version: "0.0.1",
+        discussion: "A tool to handle data in Minecraft Bedrock's leveldb",
         shouldDisplay: true,
         subcommands: [
             Extract.self,

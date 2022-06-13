@@ -10,15 +10,22 @@ import LvDBWrapper
 
 extension MCParserCLI {
     struct Extract: ParsableCommand {
-        @Option(name: .customLong("db"), help: "The path of a db directory.")
+        static var configuration = CommandConfiguration(
+            commandName: "extract",
+            abstract: "extract data and save to files",
+            discussion: "Use this subcommand to extract all data from leveldb.",
+            shouldDisplay: true
+        )
+        
+        @Option(name: .customShort("d"), help: "Path of a db directory.")
         var dbDirPath: String
         
-        @Option(name: .customLong("output"), help: "The path where to output.")
+        @Option(name: .customShort("o"), help: "Path where output directory is.")
         var outDirPath: String
         
         func run() {
             guard FileManager.default.fileExists(atPath: dbDirPath) else {
-                fatalError("Error: db directory not found at >> \(dbDirPath) <<")
+                fatalError("Error: db directory not found, wrong path >> \(dbDirPath) <<")
             }
             
             print("\n========== ========== ========== ========== ========== ==========")

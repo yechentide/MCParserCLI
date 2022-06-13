@@ -11,7 +11,14 @@ import Foundation
 
 extension MCParserCLI {
     struct Decode: ParsableCommand {
-        @Argument(help: "The path of a nbt data file.")
+        static var configuration = CommandConfiguration(
+            commandName: "decode",
+            abstract: "decode nbt data",
+            discussion: "Use this subcommand to decode nbt data and save to a file.",
+            shouldDisplay: true
+        )
+        
+        @Argument(help: "Path of a nbt data file.")
         var source: String
         
         func run() {

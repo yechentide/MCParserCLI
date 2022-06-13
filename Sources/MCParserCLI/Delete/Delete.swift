@@ -11,18 +11,25 @@ import ArgumentParser
 
 extension MCParserCLI {
     struct Delete: ParsableCommand {
-        @Option(name: .customLong("db"), help: "The path of a db directory.")
+        static var configuration = CommandConfiguration(
+            commandName: "delete",
+            abstract: "delete chunks from leveldb",
+            discussion: "Use this subcommand to delete chunks within the specified range.",
+            shouldDisplay: true
+        )
+        
+        @Option(name: .customLong("db"), help: "Path of a db directory.")
         var dbDirPath: String
         
-        @Option(name: .customLong("dimension"), help: "")
+        @Option(name: .customLong("dimension"), help: "World dimension. overworld = 0, theNether = 1, theEnd = 2")
         var dimension: Int32?
-        @Option(name: .customLong("xstart"), help: "")
+        @Option(name: .customLong("xstart"), help: "X postion of a chunk.")
         var xStart: Int32?
-        @Option(name: .customLong("xend"), help: "")
+        @Option(name: .customLong("xend"), help: "X postion of a chunk.")
         var xEnd: Int32?
-        @Option(name: .customLong("zstart"), help: "")
+        @Option(name: .customLong("zstart"), help: "Z postion of a chunk.")
         var zStart: Int32?
-        @Option(name: .customLong("zend"), help: "")
+        @Option(name: .customLong("zend"), help: "Z postion of a chunk.")
         var zEnd: Int32?
         
         func run() {
