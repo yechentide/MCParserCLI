@@ -37,7 +37,7 @@ extension MCParserCLI {
             }
             
             print("\n========== ========== ========== ========== ========== ==========")
-            print("Delete data from \(self.dbDirPath)")
+            print("Delete data from \(dbDirPath)")
             print(dimension, "xRange:", xStart...xEnd, "zRange:", zStart...zEnd)
             
             var x = xStart

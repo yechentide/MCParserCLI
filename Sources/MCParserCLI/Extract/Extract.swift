@@ -17,16 +17,16 @@ extension MCParserCLI {
         var outDirPath: String
         
         func run() {
-            guard FileManager.default.fileExists(atPath: self.dbDirPath) else {
-                fatalError("Error: db directory not found at >> \(self.dbDirPath) <<")
+            guard FileManager.default.fileExists(atPath: dbDirPath) else {
+                fatalError("Error: db directory not found at >> \(dbDirPath) <<")
             }
             
             print("\n========== ========== ========== ========== ========== ==========")
-            print("Extract data from \(self.dbDirPath)")
+            print("Extract data from \(dbDirPath)")
             
-            guard let db = LvDB(dbPath: self.dbDirPath) else { return }
+            guard let db = LvDB(dbPath: dbDirPath) else { return }
             guard let keyDataArray = db.getAllKeys() as? [Data] else { return }
-            let pg = PathGenerator(rootPath: self.outDirPath)
+            let pg = PathGenerator(rootPath: outDirPath)
             print("    to \(pg.rootDir)")
             
             for keyData in keyDataArray {

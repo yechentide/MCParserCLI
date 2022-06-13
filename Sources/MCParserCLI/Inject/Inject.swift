@@ -20,8 +20,8 @@ extension MCParserCLI {
         var dataDirPath: String
         
         func run() {
-            guard let db = LvDB(dbPath: self.dbDirPath) else { return }
-            guard let dataFiles = try? FileManager.default.contentsOfDirectory(atPath: self.dataDirPath) else {
+            guard let db = LvDB(dbPath: dbDirPath) else { return }
+            guard let dataFiles = try? FileManager.default.contentsOfDirectory(atPath: dataDirPath) else {
                 print("Error: bad data dir path")
                 os.exit(1)
             }
