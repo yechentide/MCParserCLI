@@ -53,11 +53,13 @@ extension FixedWidthInteger {
     }
     
     mutating func bitOn(offset: UInt8) {
+        guard (0..<Self.bitWidth).contains(Int(offset)) else { return }
         let newValue = (self >> offset | 0x1) << offset | self
         self = newValue
     }
     
     mutating func bitOff(offset: UInt8) {
+        guard (0..<Self.bitWidth).contains(Int(offset)) else { return }
         let left  = (self >> (offset + 1)) << (offset + 1)
         let n = UInt8(MemoryLayout.size(ofValue: self) * 8)
         let right = (self << (n-offset)) >> (n-offset)
@@ -69,7 +71,7 @@ extension FixedWidthInteger {
     }
     
     var bitArray: [UInt8] {
-        // 0b0010 ---> [0b00, 0b01, 0b00, 0b00]
+        // 0b0010 ---> [0b0, 0b1, 0b0, 0b0]
         var array = [UInt8]()
         for offset in 0..<self.bitWidth {
             let flag = (self >> offset) & 0x1 == 1
@@ -82,11 +84,25 @@ extension FixedWidthInteger {
 extension String {
     // string is little endian
     var hexData: Data? {
-        var byteArray = [UInt8]()
-        for c in self {
-            guard let byte = UInt8(String(c), radix: 16) else { return nil }
-            byteArray.append(byte)
+        var str = self
+        if str.hasPrefix("0x") {
+            let i = str.index(str.startIndex, offsetBy: 2)
+            str = String(str[i...])
         }
-        return Data(byteArray.reversed())
+        if str.contains("_") {
+            str = str.filter { $0 != "_" }
+        }
+        guard str.count % 2 == 0 else { return nil }
+        
+        var byteArray = [UInt8]()
+        var start = str.startIndex
+        while start < str.endIndex {
+            let end = str.index(start, offsetBy: 1)
+            let byteStr = str[start...end]
+            guard let byte = UInt8(byteStr, radix: 16) else { return nil }
+            byteArray.append(byte)
+            start = str.index(start, offsetBy: 2)
+        }
+        return Data(byteArray)
     }
 }
