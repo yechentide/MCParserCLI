@@ -85,6 +85,10 @@
          </CommandLineArgument>
          <CommandLineArgument
             argument = "delete --db /tmp/testWorld/db --dimension 0 --xstart 1 --xend 1 --zstart 3 --zend 3"
+            isEnabled = "NO">
+         </CommandLineArgument>
+         <CommandLineArgument
+            argument = "inject --db /tmp/testWorld/db --data /tmp/testWorld/injectData"
             isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument

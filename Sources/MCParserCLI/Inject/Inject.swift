@@ -9,35 +9,35 @@ import ArgumentParser
 import SwiftNbt
 import Foundation
 import LvDBWrapper
+import os
 
 extension MCParserCLI {
     struct Inject: ParsableCommand {
         @Option(name: .customLong("db"), help: "The path of a db directory.")
         var dbDirPath: String
         
-        @Option(name: .long, help: "")
-        var key: String
-        
         @Option(name: .customLong("data"), help: "")
-        var dataPath: String
+        var dataDirPath: String
         
         func run() {
             guard let db = LvDB(dbPath: self.dbDirPath) else { return }
-            guard key.count % 2 == 0 else {
-                fatalError("Error: wrong key")
+            guard let dataFiles = try? FileManager.default.contentsOfDirectory(atPath: self.dataDirPath) else {
+                print("Error: bad data dir path")
+                os.exit(1)
             }
             
-            var keyData = Data()
-            for i in 0...(key.count/2-1) {
-                let start = key.index(key.startIndex, offsetBy: i*2)
-                let end = key.index(key.startIndex, offsetBy: i*2+1)
-                let byteStr = key[start...end]
-                guard let byte = UInt8(byteStr, radix: 16) else { fatalError("Error: wrong key") }
-                keyData.append(byte)
+            for fileName in dataFiles {
+                guard let key = fileName.hexData else {
+                    continue
+                }
+                
+                let url = URL(fileURLWithPath: dataDirPath).appendingPathComponent(fileName)
+                guard let value = try? Data(contentsOf: url) else {
+                    continue
+                }
+                
+                let _ = db.setValue(key, value)
             }
-            
-            let valueData = try! Data(contentsOf: URL(fileURLWithPath: dataPath))
-            let _ = db.setValue(keyData, valueData)
         }
     }
 }
