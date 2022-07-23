@@ -1,10 +1,3 @@
-//
-//  File.swift
-//  
-//
-//  Created by yechentide on 2022/06/10.
-//
-
 import Foundation
 
 extension Data {
@@ -40,7 +33,7 @@ extension FixedWidthInteger {
     var data: Data {
         return withUnsafeBytes(of: self) { Data($0) }
     }
-
+    
     var binaryString: String {
         var result: [String] = []
         for i in 0..<(Self.bitWidth / 8) {
@@ -104,5 +97,15 @@ extension String {
             start = str.index(start, offsetBy: 2)
         }
         return Data(byteArray)
+    }
+}
+
+extension Date {
+    static func generateCurrentTimeString() -> String {
+        let formatter = DateFormatter()
+        formatter.locale = Locale.current
+        formatter.dateFormat = "yyyyMMdd-HHmm"
+        
+        return formatter.string(from: Date())
     }
 }

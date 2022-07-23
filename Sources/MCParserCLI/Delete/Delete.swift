@@ -18,8 +18,8 @@ extension MCParserCLI {
             shouldDisplay: true
         )
         
-        @Option(name: .customLong("db"), help: "Path of a db directory.")
-        var dbDirPath: String
+        @Option(name: .customLong("mcdir"), help: "Path of a db directory.")
+        var mcDirPath: String
         
         @Option(name: .customLong("dimension"), help: "World dimension. overworld = 0, theNether = 1, theEnd = 2")
         var dimension: Int32?
@@ -39,19 +39,19 @@ extension MCParserCLI {
             guard let xStart = xStart, let xEnd = xEnd, let zStart = zStart, let zEnd = zEnd else {
                 print("Error: wrong range"); os.exit(1)
             }
-            guard let manager = MCChunkManager(dbDirPath: dbDirPath) else {
+            guard let manager = MCDir(dirURL: URL(fileURLWithPath: mcDirPath), isSecurityScope: false).parser() else {
                 print("Error: cannot open db"); os.exit(1)
             }
             
             print("\n========== ========== ========== ========== ========== ==========")
-            print("Delete data from \(dbDirPath)")
+            print("Delete data from \(mcDirPath)")
             print(dimension, "xRange:", xStart...xEnd, "zRange:", zStart...zEnd)
             
             var x = xStart
             var z = zStart
             while z <= zEnd {
                 manager.deleteChunk(dimension: dimension, xPos: x, zPos: z)
-                
+
                 x += 1
                 if x > xEnd {
                     x = xStart

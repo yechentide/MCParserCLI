@@ -59,7 +59,7 @@
       </Testables>
    </TestAction>
    <LaunchAction
-      buildConfiguration = "Debug"
+      buildConfiguration = "Release"
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
@@ -80,16 +80,16 @@
       </BuildableProductRunnable>
       <CommandLineArguments>
          <CommandLineArgument
-            argument = "extract --db /tmp/testWorld/db --output /tmp/testWorld/deleted"
-            isEnabled = "NO">
+            argument = "extract -d /tmp/work/flat/db -o /tmp/work/flat_data02"
+            isEnabled = "YES">
          </CommandLineArgument>
          <CommandLineArgument
-            argument = "delete --db /tmp/testWorld/db --dimension 0 --xstart 1 --xend 1 --zstart 3 --zend 3"
+            argument = "delete --mcdir /tmp/work/flat --dimension 0 --xstart 0 --xend 0 --zstart 0 --zend 0"
             isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "inject --db /tmp/testWorld/db --data /tmp/testWorld/injectData"
-            isEnabled = "YES">
+            isEnabled = "NO">
          </CommandLineArgument>
          <CommandLineArgument
             argument = "decode -s /tmp/test02/players/player_2813ae5e-e356-3819-826e-d5f5f32e2889"
